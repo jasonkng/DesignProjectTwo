@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "602826209349",
+    "firebase_url": "https://designprojecttwo.firebaseio.com",
+    "project_id": "designprojecttwo",
+    "storage_bucket": "designprojecttwo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602826209349:android:86f1a35f8f8a1e28ed8b2c",
+        "android_client_info": {
+          "package_name": "com.jason.designprojecttwo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602826209349-8brcrfkkp69fq30o763r7vndss1mbcbi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jason.designprojecttwo",
+            "certificate_hash": "c49bf06c23b78995908dd4d7e7ddbb6c272668f4"
+          }
+        },
+        {
+          "client_id": "602826209349-58kjhgvm44jibnq8ib8qg4am7ahdfhah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZF2n8ljY4Xlz-nb22ncbNO7jnQNqyy9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602826209349-58kjhgvm44jibnq8ib8qg4am7ahdfhah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

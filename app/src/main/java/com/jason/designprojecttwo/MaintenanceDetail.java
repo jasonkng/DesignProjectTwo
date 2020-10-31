@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.jason.designprojecttwo.Utility.StatusModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ public class MaintenanceDetail extends AppCompatActivity {
     private TextView mUniqueId, mFault, mInitialD, mLocation, mDate, mRequested, mStatus;
     private Spinner mStatusSpinner;
     private Button mUpdateButton;
+    private ImageView mImageView;
 
     private static final String KEY_ID = "uniqueID";
     private static final String KEY_FAULT = "fault";
@@ -38,6 +41,8 @@ public class MaintenanceDetail extends AppCompatActivity {
     private static final String KEY_LOCATION = "location";
     private static final String KEY_REQUEST = "requested";
     private static final String KEY_STATUS = "status";
+    private static final String KEY_URI = "imageuri";
+    private String imageUri = "";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -58,6 +63,7 @@ public class MaintenanceDetail extends AppCompatActivity {
         mDate = findViewById(R.id.amd_date);
         mRequested = findViewById(R.id.amd_requested);
         mStatus = findViewById(R.id.amd_status);
+        mImageView = findViewById(R.id.amd_image);
 
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -70,6 +76,9 @@ public class MaintenanceDetail extends AppCompatActivity {
                 mDate.setText(info.get(KEY_DATE).toString());
                 mRequested.setText(info.get(KEY_REQUEST).toString());
                 mStatus.setText(info.get(KEY_STATUS).toString());
+
+                imageUri = info.get(KEY_URI).toString();
+                Picasso.get().load(imageUri).fit().centerCrop().into(mImageView);
 
             }
         }).addOnFailureListener(new OnFailureListener() {

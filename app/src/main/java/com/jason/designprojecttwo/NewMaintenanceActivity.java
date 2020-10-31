@@ -136,7 +136,7 @@ public class NewMaintenanceActivity extends AppCompatActivity {
         }
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
-            Picasso.get().load(mImageUri).into(imagePickerView);
+            Picasso.get().load(mImageUri).fit().into(imagePickerView);
             imagePickerButton.setVisibility(View.INVISIBLE);
             imagePickerText.setVisibility(View.INVISIBLE);
         }

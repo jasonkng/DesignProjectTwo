@@ -7,6 +7,7 @@
     tools:context=".MaintenanceDetail">
 
     <LinearLayout
+        android:id="@+id/linearOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -14,64 +15,65 @@
 
         <ImageView
             android:id="@+id/amd_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_baseline_home_24"
-            android:layout_marginBottom="20dp"/>
+            android:layout_width="350dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/loading" />
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/fOne"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Unique ID"
-                android:layout_marginLeft="50dp"
-                android:gravity="center"/>
+                android:layout_marginStart="70dp"
+                android:text="Unique ID" />
 
             <TextView
                 android:id="@+id/amd_uniqueID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_toEndOf="@+id/fOne"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@id/fOne"
                 android:text="AHU001" />
 
             <TextView
                 android:id="@+id/fTwo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/fOne"
                 android:layout_alignEnd="@id/fOne"
-                android:text="Fault"
-                android:gravity="right"/>
+                android:gravity="right"
+                android:text="Fault" />
 
             <TextView
                 android:id="@+id/amd_fault"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amd_uniqueID"
+                android:layout_alignParentEnd="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toEndOf="@id/fTwo"
                 android:text="Loud Noises" />
 
             <TextView
                 android:id="@+id/fThree"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fTwo"
                 android:layout_alignEnd="@id/fTwo"
-                android:text="Initial Diagnosis"
-                android:gravity="right"/>
+                android:gravity="right"
+                android:text="Diagnosis" />
 
             <TextView
                 android:id="@+id/amd_initialD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amd_fault"
+                android:layout_alignParentEnd="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toEndOf="@id/fThree"
                 android:text="Loose Screws" />
@@ -89,25 +91,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amd_initialD"
+                android:layout_alignParentEnd="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toEndOf="@id/fFour"
                 android:text="Level 2" />
 
             <TextView
                 android:id="@+id/fFive"
-                android:layout_below="@id/fFour"
-                android:layout_alignEnd="@id/fFour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/fFour"
+                android:layout_alignEnd="@id/fFour"
                 android:text="Date" />
 
             <TextView
-                android:layout_below="@id/amd_location"
-                android:layout_toEndOf="@id/fFive"
-                android:layout_marginLeft="20dp"
                 android:id="@+id/amd_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/amd_location"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@id/fFive"
                 android:text="2020/20/17" />
 
             <TextView
@@ -120,28 +124,30 @@
 
             <TextView
                 android:id="@+id/amd_requested"
-                android:layout_toEndOf="@id/fSix"
-                android:layout_below="@id/amd_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/amd_date"
+                android:layout_alignParentEnd="true"
                 android:layout_marginLeft="20dp"
-                android:text="jasonkngjunhui@gmail.com" />
+                android:layout_toEndOf="@id/fSix"
+                android:text="jasonkngjunhui" />
 
             <TextView
                 android:id="@+id/fSeven"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fSix"
+                android:layout_below="@id/amd_requested"
                 android:layout_alignEnd="@id/fSix"
                 android:text="Status" />
 
             <TextView
                 android:id="@+id/amd_status"
-                android:layout_toEndOf="@id/fSeven"
-                android:layout_below="@id/amd_requested"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/amd_requested"
+                android:layout_alignParentEnd="true"
                 android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@id/fSeven"
                 android:text="Submitted" />
 
         </RelativeLayout>
@@ -149,42 +155,28 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="@drawable/style_spinner"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/style_spinner">
 
             <Spinner
                 android:id="@+id/amd_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@android:color/transparent"
-                android:spinnerMode="dropdown"
-                />
+                android:spinnerMode="dropdown" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_baseline_arrow_drop_down_circle_24"/>
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_baseline_arrow_drop_down_circle_24" />
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/amd_update"
-            android:layout_marginTop="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Update"
-            android:layout_gravity="center"
-            android:background="@drawable/rounded_button"
-            />
-
 
     </LinearLayout>
-
-
-
 
 
 </RelativeLayout>

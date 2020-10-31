@@ -197,7 +197,7 @@ public class NewMaintenanceActivity extends AppCompatActivity {
         final String uniqueID = editTextUniqueID.getText().toString();
         final String fault = editTextFault.getText().toString().trim();
         final String initialDiagnosis = editTextDiagnosis.getText().toString().trim();
-        final String email = user.getEmail();
+        final String email = user.getEmail().split("@")[0];
         final String currentDate = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
                 .format(new Date());
         final String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault())

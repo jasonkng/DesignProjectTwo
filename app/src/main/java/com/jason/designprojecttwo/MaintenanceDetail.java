@@ -5,10 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +36,9 @@ public class MaintenanceDetail extends AppCompatActivity {
 
     private TextView mUniqueId, mFault, mInitialD, mLocation, mDate, mRequested, mStatus;
     private Spinner mStatusSpinner;
-    private Button mUpdateButton;
     private ImageView mImageView;
+    private LinearLayout linearLayout;
+    String status[] = {"Please select status..", "Approved", "Rejected", "Completed", "Closed"};
 
     private static final String KEY_ID = "uniqueID";
     private static final String KEY_FAULT = "fault";
@@ -42,8 +48,10 @@ public class MaintenanceDetail extends AppCompatActivity {
     private static final String KEY_REQUEST = "requested";
     private static final String KEY_STATUS = "status";
     private static final String KEY_URI = "imageuri";
+    private String finalStatus = "";
     private String imageUri = "";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentReference documentReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +62,10 @@ public class MaintenanceDetail extends AppCompatActivity {
         //Getting Data from Firestore
         Intent intent = getIntent();
         String filePath = intent.getStringExtra("filePath");
-        final DocumentReference documentReference = db.document(filePath);
+        documentReference = db.document(filePath);
+
+        linearLayout = findViewById(R.id.linearOne);
+        linearLayout.setVisibility(View.INVISIBLE);
 
         mUniqueId = findViewById(R.id.amd_uniqueID);
         mFault = findViewById(R.id.amd_fault);
@@ -77,8 +88,10 @@ public class MaintenanceDetail extends AppCompatActivity {
                 mRequested.setText(info.get(KEY_REQUEST).toString());
                 mStatus.setText(info.get(KEY_STATUS).toString());
 
+                //TODO need to fix resize maybe
                 imageUri = info.get(KEY_URI).toString();
-                Picasso.get().load(imageUri).fit().centerCrop().into(mImageView);
+                Picasso.get().load(imageUri).fit().centerInside().into(mImageView);
+                linearLayout.setVisibility(View.VISIBLE);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -90,40 +103,76 @@ public class MaintenanceDetail extends AppCompatActivity {
 
         //Populating Spinner
         mStatusSpinner = findViewById(R.id.amd_spinner);
-        mUpdateButton = findViewById(R.id.amd_update);
-        List<StatusModel> statusModel = new ArrayList<>();
-        StatusModel statusOne = new StatusModel("Approved");
-        statusModel.add(statusOne);
-        StatusModel statusTwo = new StatusModel("Rejected");
-        statusModel.add(statusTwo);
-        StatusModel statusThree = new StatusModel("Completed");
-        statusModel.add(statusThree);
-        StatusModel statusFour = new StatusModel("Closed");
-        statusModel.add(statusFour);
 
-        ArrayAdapter<StatusModel> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, statusModel);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, status);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mStatusSpinner.setAdapter(adapter);
 
-        mUpdateButton.setOnClickListener(new View.OnClickListener() {
+        mStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                StatusModel originalStatus = (StatusModel) mStatusSpinner.getSelectedItem();
-                String statusName = originalStatus.getStatusName();
-                documentReference.update(KEY_STATUS, statusName).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MaintenanceDetail.this, "Status Updated!", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MaintenanceDetail.this, "Oops, something went wrong", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        finalStatus = "null";
+                        break;
+                    case 1:
+                        finalStatus = "Approved";
+                        break;
+                    case 2:
+                        finalStatus = "Rejected";
+                        break;
+                    case 3:
+                        finalStatus = "Completed";
+                        break;
+                    case 4:
+                        finalStatus = "Closed";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.save, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save_request:
+                saveRequest();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void saveRequest() {
+        if (finalStatus.equals("null")) {
+            Toast.makeText(MaintenanceDetail.this, "Please select a status!", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            documentReference.update(KEY_STATUS, finalStatus).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(MaintenanceDetail.this, "Status Updated!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MaintenanceDetail.this, "Oops, something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

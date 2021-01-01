@@ -20,7 +20,7 @@
         android:layout_centerInParent="true"
         android:textSize="20dp"
         android:layout_marginBottom="20dp"
-        android:fontFamily="@font/bad_script"
+        android:fontFamily="@font/berlin_sans_fb_regular"
         android:textColor="@android:color/black"
         android:text="DESIGN PROJECT TWO" />
 

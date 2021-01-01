@@ -7,16 +7,20 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -39,8 +43,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.jason.designprojecttwo.Utility.ScanActivity;
-import com.jason.designprojecttwo.Utility.UploadModel;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,10 +52,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import io.grpc.Context;
-
 public class NewMaintenanceActivity extends AppCompatActivity {
-    private EditText editTextUniqueID, editTextFault, editTextDiagnosis;
+    public static final int REQUEST_CODE_CAMERA = 102;
+    private EditText editTextUniqueID, editTextFault, editTextDescription;
     private ImageButton idCamera, imagePickerButton;
     private TextView imagePickerText;
     private ImageView imagePickerView;
@@ -60,7 +63,7 @@ public class NewMaintenanceActivity extends AppCompatActivity {
     private static final String TAG = "NewMaintenanceActivity";
     private static final String KEY_ID = "uniqueID";
     private static final String KEY_FAULT = "fault";
-    private static final String KEY_DIAGNOSIS = "initialDiagnosis";
+    private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_DATE = "date";
     private static final String KEY_TIME = "time";
 
@@ -70,13 +73,14 @@ public class NewMaintenanceActivity extends AppCompatActivity {
     private static final String KEY_URI = "imageuri";
 
     private static final String C_FAILEPATH = "MaintenanceRequest";
-    private static final String C_HISTORY = "History";
+    private static final String C_HISTORY = "MaintenanceHistory";
 
     private static final String VALUE_STATUS = "Submitted";
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StorageReference storageReference;
+    private DocumentReference documentReference;
 
     private static final int REQUEST_CODE = 100;
     private static final int PERMISSION_REQUEST = 200;
@@ -90,7 +94,7 @@ public class NewMaintenanceActivity extends AppCompatActivity {
 
         editTextUniqueID = findViewById(R.id.maintenance_unique_id);
         editTextFault = findViewById(R.id.maintenance_fault);
-        editTextDiagnosis = findViewById(R.id.maintenance_diagnosis);
+        editTextDescription = findViewById(R.id.maintenance_description);
         idCamera = findViewById(R.id.maintenance_camera);
         imagePickerButton = findViewById(R.id.image_picker_button);
         imagePickerText = findViewById(R.id.image_picker_text);
@@ -117,6 +121,12 @@ public class NewMaintenanceActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, PICK_IMAGE_REQUEST);
+
+                View view = NewMaintenanceActivity.this.getCurrentFocus();
+                if(view!= null){
+                    InputMethodManager imm = (InputMethodManager) NewMaintenanceActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
             }
         });
     }
@@ -125,20 +135,25 @@ public class NewMaintenanceActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            final Barcode barcode = data.getParcelableExtra("barcode");
-            editTextUniqueID.post(new Runnable() {
-                @Override
-                public void run() {
-                    editTextUniqueID.setText(barcode.displayValue);
-                }
-            });
-        }
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            mImageUri = data.getData();
-            Picasso.get().load(mImageUri).fit().into(imagePickerView);
-            imagePickerButton.setVisibility(View.INVISIBLE);
-            imagePickerText.setVisibility(View.INVISIBLE);
+        if (resultCode == RESULT_OK){
+            switch (requestCode){
+                case REQUEST_CODE:
+                    final Barcode barcode = data.getParcelableExtra("barcode");
+                    editTextUniqueID.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            editTextUniqueID.setText(barcode.displayValue);
+                        }
+                    });
+                    break;
+
+                case PICK_IMAGE_REQUEST:
+                    mImageUri = data.getData();
+                    Picasso.get().load(mImageUri).fit().into(imagePickerView);
+                    imagePickerButton.setVisibility(View.INVISIBLE);
+                    imagePickerText.setVisibility(View.INVISIBLE);
+                    break;
+            }
         }
     }
 
@@ -179,7 +194,7 @@ public class NewMaintenanceActivity extends AppCompatActivity {
 
     private void findLocation(String uniqueID) {
         String alphabetID = uniqueID.replaceAll("[^A-Za-z]+", "");
-        DocumentReference documentReference = db.collection(alphabetID).document(uniqueID);
+        documentReference = db.collection(alphabetID).document(uniqueID);
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot snapshot) {
@@ -196,7 +211,7 @@ public class NewMaintenanceActivity extends AppCompatActivity {
     private void continueUpload(final String location) {
         final String uniqueID = editTextUniqueID.getText().toString();
         final String fault = editTextFault.getText().toString().trim();
-        final String initialDiagnosis = editTextDiagnosis.getText().toString().trim();
+        final String description = editTextDescription.getText().toString().trim();
         final String email = user.getEmail().split("@")[0];
         final String currentDate = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
                 .format(new Date());
@@ -226,7 +241,7 @@ public class NewMaintenanceActivity extends AppCompatActivity {
                     Map<String, Object> uploadingObject = new HashMap<>();
                     uploadingObject.put(KEY_ID, uniqueID);
                     uploadingObject.put(KEY_FAULT, fault);
-                    uploadingObject.put(KEY_DIAGNOSIS, initialDiagnosis);
+                    uploadingObject.put(KEY_DESCRIPTION, description);
                     uploadingObject.put(KEY_DATE, currentDate);
                     uploadingObject.put(KEY_TIME, currentTime);
                     uploadingObject.put(KEY_LOCATION, location);
@@ -234,27 +249,26 @@ public class NewMaintenanceActivity extends AppCompatActivity {
                     uploadingObject.put(KEY_STATUS, VALUE_STATUS);
                     uploadingObject.put(KEY_URI, uriFinal);
 
-//                     This is some weird way of creating duplicate files
-//                    db.collection(C_HISTORY).document(timeMillis).set(uploadingObject)
-//                            .addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Log.e(TAG, e.toString());
-//                                }
-//                            });
-
                     db.collection(C_FAILEPATH).document(timeMillis).set(uploadingObject)
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(NewMaintenanceActivity.this, "Oops, something happened!", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, e.toString());
+                                }
+                            });
+
+                    documentReference.update("lastWorkOrderSubmitted", currentDate)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(NewMaintenanceActivity.this, "Request Submitted!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(NewMaintenanceActivity.this, "Cloud Updated", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(NewMaintenanceActivity.this, "Oops, something happened!", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, e.toString());
                         }
                     });
                 } else {

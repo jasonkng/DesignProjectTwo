@@ -1,21 +1,17 @@
 package com.jason.designprojecttwo.Utility;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.jason.designprojecttwo.R;
@@ -34,7 +30,7 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<RequestModel, Reque
 
         holder.textViewUniqueID.setText(model.getUniqueID());
         holder.textViewFault.setText(model.getFault());
-        holder.textViewInitialDiagnosis.setText(model.getInitialDiagnosis());
+        holder.textViewDescription.setText(model.getDescription());
         holder.textViewDate.setText(model.getDate());
     }
 
@@ -66,7 +62,7 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<RequestModel, Reque
     class RequestHolder extends RecyclerView.ViewHolder {
         TextView textViewUniqueID;
         TextView textViewFault;
-        TextView textViewInitialDiagnosis;
+        TextView textViewDescription;
         TextView textViewDate;
         TextView textViewStatus;
 
@@ -74,7 +70,7 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<RequestModel, Reque
             super(itemView);
             textViewUniqueID = itemView.findViewById(R.id.list_unique_id);
             textViewFault = itemView.findViewById(R.id.list_fault);
-            textViewInitialDiagnosis = itemView.findViewById(R.id.list_diagnosis);
+            textViewDescription = itemView.findViewById(R.id.list_description);
             textViewDate = itemView.findViewById(R.id.list_date);
             textViewStatus = itemView.findViewById(R.id.list_status);
 
@@ -101,7 +97,7 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<RequestModel, Reque
                 holder.textViewStatus.setTextColor(Color.parseColor("#83F52C"));
                 break;
             case "Completed":
-                holder.textViewStatus.setTextColor(Color.parseColor("#F5F50A"));
+                holder.textViewStatus.setTextColor(Color.parseColor("#F6BE00"));
                 break;
             case "Closed":
                 holder.textViewStatus.setTextColor(Color.parseColor("#000000"));

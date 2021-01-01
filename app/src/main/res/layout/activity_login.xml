@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,12 +7,24 @@
     android:layout_marginHorizontal="18dp"
     tools:context=".LoginPages.LoginActivity">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:text="LOGIN"
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:textSize="40sp"/>
+
     <EditText
         android:id="@+id/login_email"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="200dp"
         android:background="@drawable/textinputborder"
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:gravity="center"
         android:hint="Email"
         android:paddingLeft="10dp" />
 
@@ -24,7 +35,10 @@
         android:layout_below="@id/login_email"
         android:layout_marginTop="10dp"
         android:background="@drawable/textinputborder"
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:gravity="center"
         android:hint="Password"
+        android:inputType="textPassword"
         android:paddingLeft="10dp" />
 
     <Button
@@ -35,7 +49,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:background="@drawable/rounded_button"
-        android:text="Login" />
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:text="Login"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/login_textview"
@@ -44,6 +60,7 @@
         android:layout_below="@id/login_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/berlin_sans_fb_regular"
         android:text="Sign Up"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="15dp" />

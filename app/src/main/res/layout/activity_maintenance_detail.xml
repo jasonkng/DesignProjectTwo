@@ -10,44 +10,59 @@
         android:id="@+id/linearOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/amd_image"
-            android:layout_width="350dp"
-            android:layout_height="250dp"
-            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/loading" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="30dp">
+
+            <View
+                android:id="@+id/viewOne"
+                android:layout_width="20dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:id="@+id/fOne"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:text="Unique ID" />
+                android:layout_below="@+id/viewOne"
+                android:layout_toStartOf="@id/viewOne"
+
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="Unique ID"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/amd_uniqueID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/viewOne"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="20dp"
-                android:layout_toEndOf="@id/fOne"
-                android:text="AHU001" />
+                android:layout_toEndOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="AHU001"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/fTwo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/fOne"
-                android:layout_alignEnd="@id/fOne"
+                android:layout_below="@+id/amd_uniqueID"
+                android:layout_toStartOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
                 android:gravity="right"
-                android:text="Fault" />
+                android:text="Fault"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/amd_fault"
@@ -55,54 +70,64 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amd_uniqueID"
                 android:layout_alignParentEnd="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toEndOf="@id/fTwo"
-                android:text="Loud Noises" />
+                android:layout_toEndOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="Loud Noises"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/fThree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fTwo"
-                android:layout_alignEnd="@id/fTwo"
+                android:layout_below="@id/amd_fault"
+                android:layout_toStartOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
                 android:gravity="right"
-                android:text="Diagnosis" />
+                android:text="Description"
+                android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/amd_initialD"
+                android:id="@+id/amd_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amd_fault"
                 android:layout_alignParentEnd="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toEndOf="@id/fThree"
-                android:text="Loose Screws" />
+                android:layout_toEndOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="Loose Screws"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/fFour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fThree"
-                android:layout_alignEnd="@id/fThree"
-                android:text="Location" />
+                android:layout_below="@id/amd_description"
+                android:layout_toStartOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="Location"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/amd_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/amd_initialD"
+                android:layout_below="@id/amd_description"
                 android:layout_alignParentEnd="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toEndOf="@id/fFour"
-                android:text="Level 2" />
+                android:layout_toEndOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="Level 2"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/fFive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fFour"
-                android:layout_alignEnd="@id/fFour"
-                android:text="Date" />
+                android:layout_below="@id/amd_location"
+                android:layout_toStartOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="Date"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/amd_date"
@@ -110,17 +135,20 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amd_location"
                 android:layout_alignParentEnd="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toEndOf="@id/fFive"
-                android:text="2020/20/17" />
+                android:layout_toEndOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="2020/20/17"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/fSix"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fFive"
-                android:layout_alignEnd="@id/fFive"
-                android:text="Requested By" />
+                android:layout_below="@id/amd_date"
+                android:layout_toStartOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="Requested By"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/amd_requested"
@@ -128,17 +156,20 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amd_date"
                 android:layout_alignParentEnd="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toEndOf="@id/fSix"
-                android:text="jasonkngjunhui" />
+                android:layout_toEndOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="jasonkngjunhui"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/fSeven"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amd_requested"
-                android:layout_alignEnd="@id/fSix"
-                android:text="Status" />
+                android:layout_toStartOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="Status"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/amd_status"
@@ -146,15 +177,18 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amd_requested"
                 android:layout_alignParentEnd="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toEndOf="@id/fSeven"
-                android:text="Submitted" />
+                android:layout_toEndOf="@id/viewOne"
+                android:fontFamily="@font/berlin_sans_fb_regular"
+                android:text="Submitted"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relativeOne"
             android:layout_width="match_parent"
             android:layout_height="35dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/style_spinner">
 
@@ -174,7 +208,6 @@
                 android:src="@drawable/ic_baseline_arrow_drop_down_circle_24" />
 
         </RelativeLayout>
-
 
     </LinearLayout>
 

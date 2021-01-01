@@ -4,8 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginPages.RegisterActivity"
-    android:layout_marginHorizontal="18dp">
+    android:layout_marginHorizontal="18dp"
+    tools:context=".LoginPages.RegisterActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:text="REGISTER"
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:textSize="40sp"/>
 
     <EditText
         android:id="@+id/register_email"
@@ -13,6 +22,8 @@
         android:layout_height="40dp"
         android:layout_marginTop="200dp"
         android:background="@drawable/textinputborder"
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:gravity="center"
         android:hint="Email"
         android:paddingLeft="10dp" />
 
@@ -23,7 +34,10 @@
         android:layout_below="@id/register_email"
         android:layout_marginTop="10dp"
         android:background="@drawable/textinputborder"
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:gravity="center"
         android:hint="Password"
+        android:inputType="textPassword"
         android:paddingLeft="10dp" />
 
     <Button
@@ -34,6 +48,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:background="@drawable/rounded_button"
-        android:text="Register" />
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:text="Register"
+        android:textStyle="bold" />
 
 </RelativeLayout>

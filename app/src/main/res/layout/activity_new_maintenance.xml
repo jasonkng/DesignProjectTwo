@@ -14,7 +14,8 @@
         android:layout_marginHorizontal="18dp"
         android:layout_marginTop="18dp"
         android:text="1. Scan QR of the component"
-        android:textSize="15dp" />
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,7 +41,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignEnd="@+id/maintenance_unique_id"
-                android:background="@color/material_on_background_disabled"
+                android:background="@android:color/transparent"
                 android:src="@drawable/ic_baseline_camera_alt_24" />
 
         </RelativeLayout>
@@ -54,7 +55,8 @@
         android:layout_marginHorizontal="18dp"
         android:layout_marginTop="10dp"
         android:text="2. Please key in the fault"
-        android:textSize="15dp" />
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/maintenance_fault"
@@ -72,17 +74,18 @@
         android:layout_below="@id/maintenance_unique_id"
         android:layout_marginHorizontal="18dp"
         android:layout_marginTop="18dp"
-        android:text="3. Initial Diagnosis"
-        android:textSize="15dp" />
+        android:text="3. Describe the Fault"
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/maintenance_diagnosis"
+        android:id="@+id/maintenance_description"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/textinputborder"
-        android:hint="Diagnosis"
+        android:hint="Description"
         android:inputType="textMultiLine"
         android:paddingLeft="10dp" />
 
@@ -103,19 +106,18 @@
             android:id="@+id/image_picker_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@color/material_on_background_disabled"
+            android:paddingTop="@dimen/image_size"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_baseline_camera_alt_24" />
 
         <TextView
             android:id="@+id/image_picker_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:layout_below="@id/image_picker_button"
+            android:layout_centerInParent="true"
             android:text="Click icon and select landscape image" />
-
 
 
     </RelativeLayout>

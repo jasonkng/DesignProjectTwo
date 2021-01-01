@@ -4,17 +4,18 @@ public class RequestModel {
 
     private String uniqueID;
     private String fault;
-    private String initialDiagnosis;
+    private String description;
     private String date;
     private String status;
+
 
     private RequestModel() {
     }
 
-    public RequestModel(String uniqueID, String fault, String initialDiagnosis, String date, String status) {
+    public RequestModel(String uniqueID, String fault, String description, String date, String status) {
         this.uniqueID = uniqueID;
         this.fault = fault;
-        this.initialDiagnosis = initialDiagnosis;
+        this.description = description;
         this.date = date;
         this.status = status;
     }
@@ -35,12 +36,12 @@ public class RequestModel {
         this.fault = fault;
     }
 
-    public String getInitialDiagnosis() {
-        return initialDiagnosis;
+    public String getDescription() {
+        return description;
     }
 
-    public void setInitialDiagnosis(String initialDiagnosis) {
-        this.initialDiagnosis = initialDiagnosis;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDate() {
